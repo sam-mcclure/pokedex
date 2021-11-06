@@ -9,26 +9,26 @@ export interface Pokemon {
   abilities: PokemonAbilityWrapper[],
   moves: PokemonMoveWrapper[],
   sprites: PokemonSprite,
+  types: PokemonTypeWrapper[]
 }
 
 interface PokemonAbilityWrapper {
-  ability: PokemonAbility
+  ability: GenericAPIItem
 }
-
-interface PokemonAbility {
-  name: string,
-  url: string
-}
-
 interface PokemonMoveWrapper {
-  move: PokemonMove
-}
-
-interface PokemonMove {
-  name: string,
-  url: string
+  move: GenericAPIItem
 }
 
 interface PokemonSprite {
   front_default: string;
+}
+
+interface PokemonTypeWrapper {
+  slot: number,
+  type: GenericAPIItem
+}
+
+interface GenericAPIItem {
+  name: string,
+  url: string,
 }
