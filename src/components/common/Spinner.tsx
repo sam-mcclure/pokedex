@@ -1,19 +1,11 @@
 import React from "react";
 import Loader from "react-loader-spinner";
-import styled from "styled-components";
-
-const SpinnerContainer = styled.div`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -50px;
-`;
+import { CenteredDiv } from "./GenericStyles";;
 
 const Spinner = (): React.ReactElement => (
-  <SpinnerContainer>
+  <CenteredDiv>
     <Loader type="TailSpin" color="#f1f1f1" />
-  </SpinnerContainer>
+  </CenteredDiv>
 );
 
 export default Spinner;
