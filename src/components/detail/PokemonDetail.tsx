@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Pokemon } from '../../types';
+import { Pokemon } from '../../commonTypes';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
 
@@ -29,6 +29,8 @@ const PokemonDetail = ():React.ReactElement => {
       .then(res => res.json())
       .then(res => updatePokemon(res));
   }, [pokemonId])
+
+  console.log(pokemon)
   
   if (pokemon) {
     return (

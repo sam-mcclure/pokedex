@@ -6,18 +6,20 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PokemonDetail from './components/detail/PokemonDetail';
+import PokemonIndex from './components/index/PokemonIndex';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/pokemon/:id' element={<PokemonDetail />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<Provider store={store}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<PokemonIndex />} />
+					<Route path="/pokemon/:id" element={<PokemonDetail />} />
+				</Routes>
+			</BrowserRouter>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
