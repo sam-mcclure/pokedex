@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { pokemonListCache } from "../../caches";
@@ -20,6 +20,8 @@ const DetailContainer = styled.div`
 `;
 
 const PokemonIndex = (): React.ReactElement => {
+  const [pokemonList, updatePokemonList] = useState(pokemonListCache);
+
 	useEffect(() => {
     if (!pokemonListCache['data']) {
       fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
@@ -33,14 +35,13 @@ const PokemonIndex = (): React.ReactElement => {
           })
 
           pokemonListCache["data"] = pokemonData;
+          updatePokemonList({"data" : pokemonData})
         });
     }
 		
-	}, []);
+	});
 
-	console.log(pokemonListCache);
-
-  if (pokemonListCache['data']) {
+  if (pokemonList['data']) {
 		return (
 			<DetailContainer>
         {pokemonListCache["data"].map((pokemon: PokemonListItem) => {
