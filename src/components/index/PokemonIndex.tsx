@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { pokemonListCache } from "../../caches";
 import { PokemonListItem } from "../../commonTypes";
+import Spinner from "../common/Spinner";
 
 const generatePokemonImageURL = (id: number) => {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
@@ -87,7 +88,7 @@ const PokemonIndex = (): React.ReactElement => {
 			</IndexContainer>
 		);
 	} else {
-		return <div>Loading</div>;
+		return <Spinner/>;
 	}
 };
 

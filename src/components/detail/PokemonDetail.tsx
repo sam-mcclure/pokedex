@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { pokemonInfoCache } from '../../caches';
 import { Pokemon } from '../../commonTypes';
+import Spinner from '../common/Spinner';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
 
@@ -13,7 +14,7 @@ const DetailContainer = styled.div`
 `;
 
 const PokemonImage = styled.img`
-  max-width: 250px;
+  max-width: 150px;
   height: auto;
 `;
 
@@ -65,7 +66,9 @@ const PokemonDetail = ():React.ReactElement => {
 			</DetailContainer>
 		);
   } else {
-    return <div>Loading</div>
+    return (
+		  <Spinner />
+		);
   }
 }
 
