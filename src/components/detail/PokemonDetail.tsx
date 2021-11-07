@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { pokemonInfoCache } from '../../caches';
 import { Pokemon } from '../../commonTypes';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
@@ -20,17 +21,29 @@ const InfoItemDiv = styled.div`
   padding-bottom: 15px;
 `;
 
+const getinitialState = (id: string | undefined): null | Pokemon => {
+  if (!id || !pokemonInfoCache[id]) {
+    return null;
+  } else {
+    return pokemonInfoCache[id];
+  }
+}
+
 const PokemonDetail = ():React.ReactElement => {
   const pokemonId = useParams().id;
-  const [ pokemon, updatePokemon ] = useState<null | Pokemon>(null)
+  const [ pokemon, updatePokemon ] = useState<null | Pokemon>(getinitialState(pokemonId))
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
-      .then(res => res.json())
-      .then(res => updatePokemon(res));
-  }, [pokemonId])
+    // Don't fetch if already in cache
+    if (!pokemonId || pokemonInfoCache[pokemonId]) return;
 
-  console.log(pokemon)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+      .then((res) => res.json())
+      .then(res => {
+        pokemonInfoCache[pokemonId] = res;
+        updatePokemon(res)
+      });
+  }, [pokemonId])
   
   if (pokemon) {
     return (
@@ -52,7 +65,7 @@ const PokemonDetail = ():React.ReactElement => {
 			</DetailContainer>
 		);
   } else {
-    return <div />
+    return <div>Loading</div>
   }
 }
 
