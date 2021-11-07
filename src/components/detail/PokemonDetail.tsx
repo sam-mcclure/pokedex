@@ -49,10 +49,17 @@ const PokemonDetail = ():React.ReactElement => {
   if (pokemon) {
     return (
 			<DetailContainer>
-				<PokemonImage src={pokemon.sprites.front_default} alt={`${pokemon.name}`} />
+				<PokemonImage
+					src={pokemon.sprites.front_default}
+					alt={`${pokemon.name}`}
+				/>
 				<InfoItemDiv>{pokemon.name}</InfoItemDiv>
 				<InfoItemDiv>Height {pokemon.height}</InfoItemDiv>
 				<InfoItemDiv>Weight {pokemon.weight}</InfoItemDiv>
+				<InfoItemDiv>
+          In Bag{" "}
+          <input type="checkbox" />
+        </InfoItemDiv>
 				<InfoItemDiv>
 					Type {pokemon.types.map((typeItem) => typeItem.type.name + " ")}
 				</InfoItemDiv>
