@@ -10,21 +10,23 @@ import {
   SearchInput,
   PokemonGridContainer,
   PokemonLink,
-  PokemonContainer
+  PokemonContainer,
+  ButtonGroup,
+  FilterButton
 } from "./PokemonIndexStyles";
 
 const generatePokemonImageURL = (id: number) => {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
 }
-
 interface PokemonData {
   name: string,
   url: string,
 }
 
 const PokemonIndex = (): React.ReactElement => {
-  const [pokemonList, updatePokemonList] = useState(pokemonListCache);
+  const [pokemonList, updatePokemonList] = useState(pokemonListCache["data"] ?? []);
   const [searchTerm, updateSearchTerm] = useState('');
+  const [selectedFilter, updateSelectedFilter] = useState<'all' | 'bag'>('all');
 
 	useEffect(() => {
     if (!pokemonListCache['data']) {
@@ -39,21 +41,37 @@ const PokemonIndex = (): React.ReactElement => {
           })
 
           pokemonListCache["data"] = pokemonData;
-          updatePokemonList({"data" : pokemonData})
+          updatePokemonList(pokemonData)
         });
     }
 	});
 
-  if (pokemonList['data']) {
-    const filteredPokemon = pokemonList["data"].filter(
+  console.log(selectedFilter)
+
+  if (pokemonList.length) {
+    const filteredPokemon = pokemonList.filter(
       (pokemon) => pokemon.name.includes(searchTerm.toLowerCase())
     );
 		return (
 			<IndexContainer>
+				<ButtonGroup>
+					<FilterButton
+						selected={selectedFilter === "all"}
+						onClick={() => updateSelectedFilter("all")}
+					>
+						All
+					</FilterButton>
+					<FilterButton
+						selected={selectedFilter === "bag"}
+						onClick={() => updateSelectedFilter("bag")}
+					>
+						Bag
+					</FilterButton>
+				</ButtonGroup>
 				<SearchBar>
-          <SearchIcon>
-					  <i className="fas fa-search"></i>
-          </SearchIcon>
+					<SearchIcon>
+						<i className="fas fa-search"></i>
+					</SearchIcon>
 					<SearchInput
 						type="text"
 						placeholder="Search"

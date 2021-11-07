@@ -9,7 +9,9 @@ export const IndexContainer = styled.div`
 `;
 
 export const PokemonGridContainer = styled.div`
-	padding: 60px;
+	padding-top: 25px;
+  width: 100%;
+  height: auto;
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	column-gap: 25px;
@@ -58,4 +60,18 @@ export const SearchInput = styled.input`
 
 export const SearchIcon = styled.div`
   color: #bdbdbd;
+`;
+
+interface FilterButtonProps extends React.HTMLProps<HTMLButtonElement> {
+  selected: boolean,
+}
+
+export const FilterButton = styled.button`
+  background-color: ${(props: FilterButtonProps) => props.selected ? '#8ab4f0' : '#fafafa'};
+  border: 1px solid #bdbdbd;
+  cursor: pointer;
+`;
+
+export const ButtonGroup = styled.div`
+  margin-bottom: 20px;
 `;
