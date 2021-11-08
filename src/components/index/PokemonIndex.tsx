@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { pokemonListCache } from "../../caches";
 import { PokemonListItem } from "../../commonTypes";
-import { CenteredDiv } from "../common/GenericStyles";
 import Spinner from "../common/Spinner";
 import {
   IndexContainer,
@@ -13,7 +11,8 @@ import {
   PokemonLink,
   PokemonContainer,
   ButtonGroup,
-  FilterButton
+  FilterButton,
+  NoResultsCard
 } from "./PokemonIndexStyles";
 
 const generatePokemonImageURL = (id: number) => {
@@ -23,14 +22,6 @@ interface PokemonData {
   name: string,
   url: string,
 }
-
-const NoResultsCard = styled.div`
-	background-color: white;
-	border-radius: 8px;
-  padding: 25px;
-  margin-top: 25px;
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-`;
 
 const PokemonIndex = (): React.ReactElement => {
   const [pokemonList, updatePokemonList] = useState(pokemonListCache["data"] ?? []);
@@ -102,11 +93,9 @@ const PokemonIndex = (): React.ReactElement => {
 						})}
 					</PokemonGridContainer>
 				) : (
-			
-            <NoResultsCard>
-              No Results Found
-            </NoResultsCard>
-         
+          <NoResultsCard>
+            No Results Found
+          </NoResultsCard>
 				)}
 			</IndexContainer>
 		);

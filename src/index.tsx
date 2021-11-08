@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PokemonDetail from './components/detail/PokemonDetail';
@@ -10,14 +8,12 @@ import PokemonIndex from './components/index/PokemonIndex';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<PokemonIndex />} />
 					<Route path="/pokemon/:id" element={<PokemonDetail />} />
 				</Routes>
 			</BrowserRouter>
-		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
