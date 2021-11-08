@@ -8,13 +8,26 @@ import Spinner from '../common/Spinner';
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
 
 const DetailContainer = styled.div`
-  padding: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-color: white;
+  padding: 25px;
+  margin: 60px;
+	border-radius: 8px;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+`;
+
+const FlexDiv = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
 `;
 
 const PokemonImage = styled.img`
-  max-width: 150px;
+  width: 250px;
   height: auto;
 `;
 
@@ -49,27 +62,31 @@ const PokemonDetail = ():React.ReactElement => {
   if (pokemon) {
     return (
 			<DetailContainer>
-				<PokemonImage
-					src={pokemon.sprites.front_default}
-					alt={`${pokemon.name}`}
-				/>
-				<InfoItemDiv>{pokemon.name}</InfoItemDiv>
-				<InfoItemDiv>Height {pokemon.height}</InfoItemDiv>
-				<InfoItemDiv>Weight {pokemon.weight}</InfoItemDiv>
-				<InfoItemDiv>
-          In Bag{" "}
-          <input type="checkbox" />
-        </InfoItemDiv>
-				<InfoItemDiv>
-					Type {pokemon.types.map((typeItem) => typeItem.type.name + " ")}
-				</InfoItemDiv>
-				<InfoItemDiv>{genericDescription}</InfoItemDiv>
-				<InfoItemDiv>
-					Abilities{" "}
-					{pokemon.abilities.map(
-						(abilityItem) => abilityItem.ability.name + " "
-					)}
-				</InfoItemDiv>
+        <FlexDiv>
+          <PokemonImage
+            src={pokemon.sprites.front_default}
+            alt={`${pokemon.name}`}
+          />
+          <InfoItemDiv>{pokemon.name}</InfoItemDiv>
+        </FlexDiv>
+        <div>
+          <InfoItemDiv>Height {pokemon.height}</InfoItemDiv>
+          <InfoItemDiv>Weight {pokemon.weight}</InfoItemDiv>
+          <InfoItemDiv>
+            In Bag{" "}
+            <input type="checkbox" />
+          </InfoItemDiv>
+          <InfoItemDiv>
+            Type {pokemon.types.map((typeItem) => typeItem.type.name + " ")}
+          </InfoItemDiv>
+          <InfoItemDiv>{genericDescription}</InfoItemDiv>
+          <InfoItemDiv>
+            Abilities{" "}
+            {pokemon.abilities.map(
+              (abilityItem) => abilityItem.ability.name + " "
+            )}
+          </InfoItemDiv>
+        </div>
 			</DetailContainer>
 		);
   } else {

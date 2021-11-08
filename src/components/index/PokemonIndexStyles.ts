@@ -6,6 +6,8 @@ export const IndexContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  height: auto;
 `;
 
 export const PokemonGridContainer = styled.div`
@@ -32,9 +34,11 @@ export const PokemonContainer = styled.div`
 	align-items: center;
 	padding: 10px 0px;
 	border-radius: 8px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 	:hover {
-		background-color: rgba(241, 241, 241, 0.6);
+		background-color: rgba(241, 241, 241, 1);
 		transition: all 0.2s ease-in-out;
 		transform: scale(1.05);
 	}
@@ -50,6 +54,7 @@ export const SearchBar = styled.div`
   border-radius: 10px;
   border: 1px solid #bdbdbd;
   padding: 4px 8px;
+  background-color: white;
 `;
 
 export const SearchInput = styled.input`
