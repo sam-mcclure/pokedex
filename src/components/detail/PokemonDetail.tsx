@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { pokemonInfoCache } from '../../utils/caches';
 import { Pokemon } from '../../utils/commonTypes';
+import { addPokemonToBag, getSinglePokemonInBag, removePokemonFromBag } from '../../utils/localStorageHandlers';
 import Spinner from '../common/Spinner';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
@@ -35,7 +36,7 @@ const InfoItemDiv = styled.div`
   padding-bottom: 15px;
 `;
 
-const getinitialState = (id: string | undefined): null | Pokemon => {
+const getinitialPokemonState = (id: string | undefined): null | Pokemon => {
   if (!id || !pokemonInfoCache[id]) {
     return null;
   } else {
@@ -43,9 +44,17 @@ const getinitialState = (id: string | undefined): null | Pokemon => {
   }
 }
 
+const getInitialPokemonBagState = (id: string | undefined): boolean => {
+  if (id) {
+    return getSinglePokemonInBag(id);
+  }
+  return false;
+}
+
 const PokemonDetail = ():React.ReactElement => {
   const pokemonId = useParams().id;
-  const [ pokemon, updatePokemon ] = useState<null | Pokemon>(getinitialState(pokemonId))
+  const [ pokemon, updatePokemon ] = useState<null | Pokemon>(getinitialPokemonState(pokemonId));
+  const [isPokemonInBag, updateIsPokemonInBag] = useState<boolean>(getInitialPokemonBagState(pokemonId))
 
   useEffect(() => {
     // Don't fetch if already in cache
@@ -58,6 +67,18 @@ const PokemonDetail = ():React.ReactElement => {
         updatePokemon(res)
       });
   }, [pokemonId])
+
+  const togglePokemonInBag = () => {
+    if (!pokemonId) return;
+
+    if (isPokemonInBag) {
+      removePokemonFromBag(pokemonId);
+      updateIsPokemonInBag(false);
+    } else {
+      addPokemonToBag(pokemonId);
+      updateIsPokemonInBag(true);
+    }
+  }
   
   if (pokemon) {
     return (
@@ -74,7 +95,7 @@ const PokemonDetail = ():React.ReactElement => {
           <InfoItemDiv>Weight {pokemon.weight}</InfoItemDiv>
           <InfoItemDiv>
             In Bag{" "}
-            <input type="checkbox" />
+            <input type="checkbox" checked={isPokemonInBag} onChange={togglePokemonInBag} />
           </InfoItemDiv>
           <InfoItemDiv>
             Type {pokemon.types.map((typeItem) => typeItem.type.name + " ")}

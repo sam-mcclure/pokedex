@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { pokemonListCache } from "../../utils/caches";
 import { PokemonListItem } from "../../utils/commonTypes";
+import { getAllPokemonInBag } from "../../utils/localStorageHandlers";
 import Spinner from "../common/Spinner";
 import {
   IndexContainer,
@@ -46,12 +47,20 @@ const PokemonIndex = (): React.ReactElement => {
     }
 	});
 
-  console.log(selectedFilter)
+  const getFilteredPokemon = (): PokemonListItem[] => {
+    const filteredBySearch = searchTerm ? pokemonList.filter((pokemon) =>
+			pokemon.name.includes(searchTerm.toLowerCase())
+		) : pokemonList;
+    if (selectedFilter === 'all') {
+      return filteredBySearch;
+    } else {
+      const pokemonInBag = getAllPokemonInBag();
+      return filteredBySearch.filter(pokemon => pokemonInBag.includes(pokemon.id.toString()))
+    }
+  }
 
   if (pokemonList.length) {
-    const filteredPokemon = pokemonList.filter(
-      (pokemon) => pokemon.name.includes(searchTerm.toLowerCase())
-    );
+    const filteredPokemon = getFilteredPokemon();
 		return (
 			<IndexContainer>
 				<ButtonGroup>
