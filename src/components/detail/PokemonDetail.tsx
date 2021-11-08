@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { pokemonInfoCache } from '../../utils/caches';
 import { Pokemon } from '../../utils/commonTypes';
-import { addPokemonToBag, getSinglePokemonInBag, removePokemonFromBag } from '../../utils/localStorageHandlers';
+import { addPokemonToBag, isPokemonInBag, removePokemonFromBag } from '../../utils/localStorageHandlers';
 import Spinner from '../common/Spinner';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
@@ -46,7 +46,7 @@ const getinitialPokemonState = (id: string | undefined): null | Pokemon => {
 
 const getInitialPokemonBagState = (id: string | undefined): boolean => {
   if (id) {
-    return getSinglePokemonInBag(id);
+    return isPokemonInBag(id);
   }
   return false;
 }

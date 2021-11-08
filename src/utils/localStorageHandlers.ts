@@ -8,15 +8,18 @@ export const getAllPokemonInBag = (): string[] => {
   }
 }
 
-export const getSinglePokemonInBag = (id: string): boolean => {
+export const isPokemonInBag = (id: string): boolean => {
   const currBag = getAllPokemonInBag();
   return currBag.includes(id);
 }
 
 export const addPokemonToBag = (id: string):void => {
   const currBag = getAllPokemonInBag();
-  currBag.push(id);
-  localStorage.setItem("PokemonBag", JSON.stringify(currBag));
+
+  if (!currBag.includes(id)) {
+    currBag.push(id);
+    localStorage.setItem("PokemonBag", JSON.stringify(currBag));
+  }
 }
 
 export const removePokemonFromBag = (id: string): void => {
