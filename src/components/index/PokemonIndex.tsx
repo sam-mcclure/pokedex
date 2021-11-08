@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { pokemonListCache } from "../../caches";
-import { PokemonListItem } from "../../commonTypes";
+import { pokemonListCache } from "../../utils/caches";
+import { PokemonListItem } from "../../utils/commonTypes";
 import Spinner from "../common/Spinner";
 import {
   IndexContainer,

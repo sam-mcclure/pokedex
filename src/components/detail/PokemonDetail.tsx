@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { pokemonInfoCache } from '../../caches';
-import { Pokemon } from '../../commonTypes';
+import { pokemonInfoCache } from '../../utils/caches';
+import { Pokemon } from '../../utils/commonTypes';
 import Spinner from '../common/Spinner';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
