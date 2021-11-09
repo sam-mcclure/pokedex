@@ -2,6 +2,7 @@
   "name": "pokedex-project",
   "version": "0.1.0",
   "private": true,
+  "description": "https://github.com/sam-mcclure/pokedex",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^12.1.2",
