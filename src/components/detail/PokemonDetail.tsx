@@ -38,7 +38,7 @@ const PokemonDetail = ():React.ReactElement => {
 				pokemonInfoCache[pokemonId] = res;
 				updatePokemon(res);
 			})
-			.catch((err) => console.log(err));;
+			.catch((err) => console.log(err));
   }, [pokemonId])
 
   const togglePokemonInBag = () => {
@@ -85,7 +85,7 @@ const PokemonDetail = ():React.ReactElement => {
 		);
   } else {
     return (
-		  <Spinner />
+      <Spinner />
 		);
   }
 }

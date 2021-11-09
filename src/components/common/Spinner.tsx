@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "react-loader-spinner";
-import { CenteredDiv } from "./GenericStyles";;
+import { CenteredDiv } from "./GenericStyles";
 
 const Spinner = (): React.ReactElement => (
   <CenteredDiv>
