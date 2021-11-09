@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { pokemonListCache } from "../../utils/caches";
-import { PokemonListItem } from "../../utils/commonTypes";
+import { PokemonFilter, PokemonListItem } from "../../utils/commonTypes";
 import { getAllPokemonInBag } from "../../utils/localStorageHandlers";
 import Spinner from "../common/Spinner";
+import FilterButtons from "./FilterButtons";
+import NoResultsCard from "./NoResultsCard";
+import PokemonIndexItem from "./PokemonIndexItem";
 import {
   IndexContainer,
-  SearchBar,
-  SearchIcon,
-  SearchInput,
   PokemonGridContainer,
-  PokemonLink,
-  PokemonContainer,
-  ButtonGroup,
-  FilterButton,
-  NoResultsCard
 } from "./PokemonIndexStyles";
+import SearchBar from "./SearchBar";
 
 const generatePokemonImageURL = (id: number) => {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
@@ -25,12 +21,12 @@ interface PokemonData {
 }
 
 const PokemonIndex = (): React.ReactElement => {
-  const [pokemonList, updatePokemonList] = useState(pokemonListCache["data"] ?? []);
+  const [pokemonList, updatePokemonList] = useState(pokemonListCache);
   const [searchTerm, updateSearchTerm] = useState('');
-  const [selectedFilter, updateSelectedFilter] = useState<'all' | 'bag'>('all');
+  const [selectedFilter, updateSelectedFilter] = useState<PokemonFilter>('all');
 
 	useEffect(() => {
-    if (!pokemonListCache['data']) {
+    if (!pokemonListCache.length) {
       fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
 				.then((res) => res.json())
 				.then(res => {
@@ -41,9 +37,10 @@ const PokemonIndex = (): React.ReactElement => {
             pokemonData.push({'name': pokemon.name, 'id': id, imageUrl: generatePokemonImageURL(id)})
           })
 
-          pokemonListCache["data"] = pokemonData;
+          pokemonListCache.push(...pokemonData);
           updatePokemonList(pokemonData)
-        });
+        })
+        .catch(err => console.log(err));
     }
 	});
 
@@ -59,52 +56,29 @@ const PokemonIndex = (): React.ReactElement => {
     }
   }
 
+  const onUpdateSelectedFilter = (filter: PokemonFilter): void => {
+    updateSelectedFilter(filter);
+  }
+
+  const onUpdateSearchTerm = (term: string): void => {
+		updateSearchTerm(term);
+	};
+
   if (pokemonList.length) {
     const filteredPokemon = getFilteredPokemon();
 		return (
 			<IndexContainer>
-				<ButtonGroup>
-					<FilterButton
-						selected={selectedFilter === "all"}
-						onClick={() => updateSelectedFilter("all")}
-					>
-						All
-					</FilterButton>
-					<FilterButton
-						selected={selectedFilter === "bag"}
-						onClick={() => updateSelectedFilter("bag")}
-					>
-						Bag
-					</FilterButton>
-				</ButtonGroup>
-				<SearchBar>
-					<SearchIcon>
-						<i className="fas fa-search"></i>
-					</SearchIcon>
-					<SearchInput
-						type="text"
-						placeholder="Search"
-						value={searchTerm}
-						onChange={(e) => updateSearchTerm(e.target.value)}
-					/>
-				</SearchBar>
+				<FilterButtons
+          selectedFilter={selectedFilter}
+          updateSelectedFilter={onUpdateSelectedFilter}
+        />
+        <SearchBar searchTerm={searchTerm} updateSearchTerm={onUpdateSearchTerm} />
 				{filteredPokemon.length ? (
 					<PokemonGridContainer>
-						{filteredPokemon.map((pokemon) => {
-							return (
-								<PokemonLink to={`pokemon/${pokemon.id}`} key={pokemon.id}>
-									<PokemonContainer>
-										<img src={pokemon.imageUrl} alt={pokemon.name} />
-										<div>{pokemon.name}</div>
-									</PokemonContainer>
-								</PokemonLink>
-							);
-						})}
+						{filteredPokemon.map((pokemon) => <PokemonIndexItem pokemon={pokemon} />)}
 					</PokemonGridContainer>
 				) : (
-          <NoResultsCard>
-            No Results Found
-          </NoResultsCard>
+          <NoResultsCard />
 				)}
 			</IndexContainer>
 		);

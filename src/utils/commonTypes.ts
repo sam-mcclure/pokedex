@@ -37,3 +37,5 @@ export interface PokemonListItem {
   id: number,
   imageUrl: string,
 }
+
+export type PokemonFilter = 'all' | 'bag';

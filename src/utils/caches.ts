@@ -1,10 +1,6 @@
 import { Pokemon, PokemonListItem } from "./commonTypes";
 
-interface PokemonListCache {
-  [key:string]: PokemonListItem[],
-}
-
-export const pokemonListCache: PokemonListCache  = {};
+export const pokemonListCache: PokemonListItem[]  = [];
 
 interface PokemonInfoCache {
   [key: string]: Pokemon

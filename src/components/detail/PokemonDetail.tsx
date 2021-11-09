@@ -1,40 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { pokemonInfoCache } from '../../utils/caches';
 import { Pokemon } from '../../utils/commonTypes';
 import { addPokemonToBag, isPokemonInBag, removePokemonFromBag } from '../../utils/localStorageHandlers';
 import Spinner from '../common/Spinner';
+import { DetailContainer, FlexDiv, InfoItemDiv, PokemonImage } from './PokemonDetailStyles';
 
 const genericDescription = "This is the greatest Pokemon that has ever lived. If you don't have one, you need to go out and catch it right now"
-
-const DetailContainer = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	background-color: white;
-  padding: 25px;
-  margin: 60px;
-	border-radius: 8px;
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
-`;
-
-const PokemonImage = styled.img`
-  width: 250px;
-  height: auto;
-`;
-
-const InfoItemDiv = styled.div`
-  padding-bottom: 15px;
-`;
 
 const getinitialPokemonState = (id: string | undefined): null | Pokemon => {
   if (!id || !pokemonInfoCache[id]) {
@@ -61,11 +33,12 @@ const PokemonDetail = ():React.ReactElement => {
     if (!pokemonId || pokemonInfoCache[pokemonId]) return;
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
-      .then((res) => res.json())
-      .then(res => {
-        pokemonInfoCache[pokemonId] = res;
-        updatePokemon(res)
-      });
+			.then((res) => res.json())
+			.then((res) => {
+				pokemonInfoCache[pokemonId] = res;
+				updatePokemon(res);
+			})
+			.catch((err) => console.log(err));;
   }, [pokemonId])
 
   const togglePokemonInBag = () => {
