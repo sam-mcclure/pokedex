@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { pokemonInfoCache } from '../../utils/caches';
 import { Pokemon } from '../../utils/commonTypes';
 import { addPokemonToBag, isPokemonInBag, removePokemonFromBag } from '../../utils/localStorageHandlers';
+import { PrimaryButton } from '../common/GenericStyles';
 import Spinner from '../common/Spinner';
 import { DetailContainer, FlexDiv, InfoItemDiv, PokemonImage } from './PokemonDetailStyles';
 
@@ -81,6 +82,9 @@ const PokemonDetail = ():React.ReactElement => {
             )}
           </InfoItemDiv>
         </div>
+        <Link to="/">
+          <PrimaryButton type="button">Back</PrimaryButton>
+        </Link>
 			</DetailContainer>
 		);
   } else {

@@ -6,14 +6,30 @@ interface FilterButtonProps extends React.HTMLProps<HTMLButtonElement> {
 	selected: boolean;
 }
 
-export const FilterButton = styled.button`
+const FilterButton = styled.button`
 	background-color: ${(props: FilterButtonProps) =>
 		props.selected ? "#8ab4f0" : "#fafafa"};
+	color: ${(props: FilterButtonProps) =>
+		props.selected ? "white" : "black"};
 	border: 1px solid #bdbdbd;
 	cursor: pointer;
+
+	:hover {
+		filter: brightness(95%);
+	}
 `;
 
-export const ButtonGroup = styled.div`
+const FilterButtonRight = styled(FilterButton)`
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+`;
+
+const FilterButtonLeft = styled(FilterButton)`
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+`;
+
+const ButtonGroup = styled.div`
 	margin-bottom: 20px;
 `;
 
@@ -27,18 +43,18 @@ const FilterButtons = ({
 	updateSelectedFilter,
 }: FilterButtonsProps): React.ReactElement => (
 	<ButtonGroup>
-		<FilterButton
+		<FilterButtonLeft
 			selected={selectedFilter === "all"}
 			onClick={() => updateSelectedFilter("all")}
 		>
 			All
-		</FilterButton>
-		<FilterButton
+		</FilterButtonLeft>
+		<FilterButtonRight
 			selected={selectedFilter === "bag"}
 			onClick={() => updateSelectedFilter("bag")}
 		>
 			Bag
-		</FilterButton>
+		</FilterButtonRight>
 	</ButtonGroup>
 );
 
