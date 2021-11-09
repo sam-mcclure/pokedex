@@ -1,9 +1,6 @@
 interface PokemonAbilityWrapper {
   ability: GenericAPIItem
 }
-interface PokemonMoveWrapper {
-  move: GenericAPIItem
-}
 
 interface PokemonSprite {
   front_default: string;
@@ -27,7 +24,6 @@ export interface Pokemon {
   height: number,
   weight: number,
   abilities: PokemonAbilityWrapper[],
-  moves: PokemonMoveWrapper[],
   sprites: PokemonSprite,
   types: PokemonTypeWrapper[]
 }

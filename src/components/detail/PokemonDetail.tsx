@@ -26,11 +26,14 @@ const getInitialPokemonBagState = (id: string | undefined): boolean => {
 const PokemonDetail = ():React.ReactElement => {
   const pokemonId = useParams().id;
   const [ pokemon, updatePokemon ] = useState<null | Pokemon>(getinitialPokemonState(pokemonId));
-  const [isPokemonInBag, updateIsPokemonInBag] = useState<boolean>(getInitialPokemonBagState(pokemonId))
+  const [ isPokemonInBag, updateIsPokemonInBag ] = useState<boolean>(getInitialPokemonBagState(pokemonId))
+
+  console.log('detail')
 
   useEffect(() => {
     // Don't fetch if already in cache
     if (!pokemonId || pokemonInfoCache[pokemonId]) return;
+    console.log('in req')
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
 			.then((res) => res.json())
